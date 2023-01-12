@@ -1,0 +1,80 @@
+<form class="mat-elevation-z8">
+  <mat-toolbar color="primary">Register</mat-toolbar>
+
+  <div class="form-fields">
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput [(ngModel)]="newUser.fname" name="fname" />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput [(ngModel)]="newUser.lname" name="lname" />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="newUser.email" name="email" />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        [(ngModel)]="newUser.password"
+        name="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Confirm Password</mat-label>
+      <input
+        matInput
+        [type]="hide2 ? 'password' : 'text'"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide2 = !hide2"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide2"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <br />
+  <div class="buttons">
+  <button
+    mat-raised-button
+    type="submit"
+    color="accent"
+    style="margin-top: 10px"
+    (click)="register()"
+  >
+    Register and Login
+  </button>
+  <br />
+  <button
+    mat-raised-button
+    type="submit"
+    color="accent"
+    style="margin-top: 10px"
+    (click)="ui.showLogin()"
+  >
+    Already Registered?
+  </button>
+</div>
+</form>
