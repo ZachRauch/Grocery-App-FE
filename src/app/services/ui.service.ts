@@ -183,7 +183,7 @@ export class UiService {
         next: () => {
           this.updateAccount()
         },
-        error: (err) => this.showError("Error updating account")
+        error: () => this.showError("Error updating account")
       })
 }
 
@@ -196,7 +196,7 @@ updateEditedProfile(updatedAccount: User): void {
         this.isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"))
             this.currentUser.next(updatedAccount)
     },
-      error: (err) => this.showError("Error updating account")
+      error: () => this.showError("Error updating account")
     })
 }
 
@@ -239,7 +239,7 @@ addRecipe(newRecipe: Recipe) {
   .pipe(take(1))
   .subscribe({
     next: () => this.getRecipes(),
-    error: (err) => this.showError("Error adding recipe")
+    error: () => this.showError("Error adding recipe")
   })
 }
 
@@ -267,7 +267,7 @@ updateItem(updatedItem: Item) {
     next: () => {
       this.getItems()
   },
-    error: (err) => this.showError("Error updating item inventory")
+    error: () => this.showError("Error updating item inventory")
   })
 }
 }
