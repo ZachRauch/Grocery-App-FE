@@ -20,6 +20,13 @@ import { AccountProfileComponent } from './components/account-profile/account-pr
 import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import {EditAccountComponent} from './components/edit-account/edit-account.component';
+import { RecipesComponent } from './components/recipes/recipes.component';
+import { ShoppinglistComponent } from './components/shoppinglist/shoppinglist.component';
+import { PantryComponent } from './components/pantry/pantry.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NewRecipeComponent } from './components/new-recipe/new-recipe.component';
 
 
 @NgModule({
@@ -29,7 +36,11 @@ import {EditAccountComponent} from './components/edit-account/edit-account.compo
     LoginComponent,
     RegisterComponent,
     AccountProfileComponent,
-    EditAccountComponent
+    EditAccountComponent,
+    RecipesComponent,
+    ShoppinglistComponent,
+    PantryComponent,
+    NewRecipeComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +54,10 @@ import {EditAccountComponent} from './components/edit-account/edit-account.compo
     HttpClientModule,
     MatSnackBarModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule,
+    MatSidenavModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

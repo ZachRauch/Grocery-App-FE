@@ -1,0 +1,43 @@
+<form class="mat-elevation-z8">
+    <mat-toolbar color="primary">Register</mat-toolbar>
+  
+    <div class="form-fields">
+      <mat-form-field appearance="fill">
+        <mat-label>Recipe Name</mat-label>
+        <input matInput [(ngModel)]="newRecipe.name" name="name" />
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Image link</mat-label>
+        <input matInput [(ngModel)]="newRecipe.recipeImage" name="recipeImage" />
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Ingredients</mat-label>
+        <input matInput [(ngModel)]="newRecipe.items" name="items" />
+      </mat-form-field>
+    </div>
+    <br />
+    <div class="buttons">
+    <button
+      mat-raised-button
+      type="submit"
+      color="accent"
+      style="margin-top: 10px"
+      (click)="ui.addRecipe(this.newRecipe)"
+    >
+      Add Recipe
+    </button>
+    <br />
+    <button
+      mat-raised-button
+      type="submit"
+      color="accent"
+      style="margin-top: 10px"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+  </div>
+  </form>
+  

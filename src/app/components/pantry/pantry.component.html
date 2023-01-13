@@ -1,0 +1,21 @@
+<h2>Pantry</h2>
+>
+<button (click)="ui.getItems()">retrieve thine items</button>
+
+<!-- At some oipnt retrieve items in order of quantity descending -->
+<div *ngFor="let each of this.ui.items">
+  <img src="{{ each.itemImage }}" width="100px" height="100px" />
+  {{ each.name }} (x{{ each.quantity }})
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button matTooltip="Update Pantry Inventory" color="warn" (click)="reduceQuantity(each)">
+    <mat-icon>remove_circle_outline</mat-icon>
+  </button>
+
+  <button mat-icon-button matTooltip="Update Pantry Inventory" (click)="addQuantity(each)">
+    <mat-icon class="green-icon">add_circle_outline</mat-icon>
+  </button>
+
+  <hr />
+</div>

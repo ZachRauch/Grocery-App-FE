@@ -1,4 +1,3 @@
-<p>account-profile works!</p>
 <mat-card class="card">
     <mat-card-header>
       <mat-card-title>{{ ui.currentUser.fname }}</mat-card-title>
@@ -19,10 +18,11 @@
           mat-button>Delete</button>
       </div>
       <div>
-        <button (click)="ui.resetDisplays()" mat-button>Close</button>
+        <button (click)="ui.showToolbar()" mat-button>Close</button>
       </div>
     </mat-card-actions>
   </mat-card>
   <div *ngIf="this.ui.displayEdit">
     <app-edit-account></app-edit-account>
   </div>
+  

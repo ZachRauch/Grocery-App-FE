@@ -5,6 +5,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAccountComponent } from '../components/edit-account/edit-account.component';
+import { Pantry } from '../dataModels/Pantry';
+import { Item } from '../dataModels/Items';
+import { Recipe } from '../dataModels/Recipe';
 
 
 @Injectable({
@@ -29,13 +32,22 @@ export class UiService {
   public displayRegister = false;
   public displayToolbar = false;
   public displayProfile = false;
+  public displayRecipes = false;
+
 
   resetDisplays() {
     this.displayLogin = false;
     this.displayRegister = false;
     this.displayToolbar = false;
     this.displayProfile = false;
+    this.displayRecipes = false;
 
+  }
+
+  showRecipes() {
+    this.resetDisplays();
+    this.displayToolbar = true;
+    this.displayRecipes = true;
   }
 
   showRegister() {
@@ -52,6 +64,11 @@ export class UiService {
     this.resetDisplays();
     this.displayToolbar = true;
     this.displayProfile = true;
+  }
+
+  showToolbar() {
+    this.resetDisplays();
+    this.displayToolbar = true;
   }
 
   public showError(message: string): void {
@@ -160,7 +177,7 @@ export class UiService {
   }
 
   updateEditedAccount(updatedAccount: User): void {
-    this.http.put(`http://localhost:8080/users/${updatedAccount.id}?email=${this.currentUser.value.email}&password=${this.currentUser.value.password}`, updatedAccount)
+    this.http.put(`http://localhost:8080/users/${updatedAccount.userId}?email=${this.currentUser.email}&password=${this.currentUser.password}`, updatedAccount)
       .pipe(take(1))
       .subscribe({
         next: () => {
@@ -171,7 +188,7 @@ export class UiService {
 }
 
 updateEditedProfile(updatedAccount: User): void {
-  this.http.put(`http://localhost:8080/users/${updatedAccount.id}?email=${this.currentUser.value.email}&password=${this.currentUser.value.password}`, updatedAccount)
+  this.http.put(`http://localhost:8080/users/${updatedAccount.userId}?email=${this.currentUser.email}&password=${this.currentUser.password}`, updatedAccount)
     .pipe(take(1))
     .subscribe({
       next: () => {
@@ -197,4 +214,60 @@ updateAccount(): void {
   })
 }
 
+getCurrentUser() {
+  console.log(this.currentUser)
+}
+
+public recipes: Recipe[] = []
+
+getRecipes() {
+  this.http
+      .get<Recipe[]>(`http://localhost:8080/recipes?userId=${this.currentUser.userId}`)
+      .pipe(take(1))
+      .subscribe({
+        next: recipes => {
+          this.recipes = recipes
+        },
+        error: () => {
+          this.showError('Failed to get recipes')
+        }
+      })
+}
+
+addRecipe(newRecipe: Recipe) {
+  this.http.post('http://localhost:8080/recipes', newRecipe)
+  .pipe(take(1))
+  .subscribe({
+    next: () => this.getRecipes(),
+    error: (err) => this.showError("Error adding recipe")
+  })
+}
+
+
+public items: Item[] = []
+
+getItems() {
+  this.http
+  .get<Item[]>(`http://localhost:8080/items?userId=${this.currentUser.userId}`)
+  .pipe(take(1))
+  .subscribe({
+    next: items => {
+      this.items = items
+    },
+    error: () => {
+      this.showError('Failed to get items')
+    }
+  })
+}
+
+updateItem(updatedItem: Item) {
+  this.http.put(`http://localhost:8080/items/${updatedItem.userId}`, updatedItem)
+  .pipe(take(1))
+  .subscribe({
+    next: () => {
+      this.getItems()
+  },
+    error: (err) => this.showError("Error updating item inventory")
+  })
+}
 }

@@ -20,7 +20,7 @@ export class EditAccountComponent {
 
   constructor(public ui: UiService, public dialogRef: MatDialogRef<EditAccountComponent>) {
     this.account = this.ui.accountEdit
-    this.id = this.ui.accountEdit.id
+    this.id = this.ui.accountEdit.userId
     this.fname = this.ui.accountEdit.fname
     this.lname = this.ui.accountEdit.lname
     this.email = this.ui.accountEdit.email
