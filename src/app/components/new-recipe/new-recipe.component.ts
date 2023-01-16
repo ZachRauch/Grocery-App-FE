@@ -24,7 +24,11 @@ export class NewRecipeComponent {
     this.ui.displayRecipes = true
   }
 
-  addItemToList(item: Item) {
-    this.itemList.push(item)
+  updateQuantity() {
+
+  }
+
+  addItemToList(item: Item, quantity: number) {
+     this.itemList.push(item)*quantity
   }
 }
