@@ -27,6 +27,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NewRecipeComponent } from './components/new-recipe/new-recipe.component';
+import { AddItemComponent } from './components/add-item/add-item.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { NewRecipeComponent } from './components/new-recipe/new-recipe.component
     RecipesComponent,
     ShoppinglistComponent,
     PantryComponent,
-    NewRecipeComponent
+    NewRecipeComponent,
+    AddItemComponent
   ],
   imports: [
     BrowserModule,

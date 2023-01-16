@@ -1,5 +1,4 @@
-<form class="mat-elevation-z8">
-    <mat-toolbar color="primary">Register</mat-toolbar>
+    <mat-toolbar color="primary">New Recipe</mat-toolbar>
   
     <div class="form-fields">
       <mat-form-field appearance="fill">
@@ -12,11 +11,41 @@
         <input matInput [(ngModel)]="newRecipe.recipeImage" name="recipeImage" />
       </mat-form-field>
       <br />
-      <mat-form-field appearance="fill">
-        <mat-label>Ingredients</mat-label>
-        <input matInput [(ngModel)]="newRecipe.items" name="items" />
-      </mat-form-field>
+
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Items
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let each of this.ui.items">
+          <img src="{{ each.itemImage }}" width="100px" height="100px" />
+          {{ each.name }}
+
+          <span class="spacer"></span>
+
+          <button mat-icon-button matTooltip="Adjust Quantity for recipe" color="warn">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+        
+          {{this.quantity}}
+
+          <button mat-icon-button matTooltip="Adjust Quantity for recipe">
+            <mat-icon class="green-icon">add_circle_outline</mat-icon>
+          </button>
+
+          <button mat-icon-button matTooltip="Add Item to Recipe">
+            <mat-icon class="green-icon">playlist_add</mat-icon>
+          </button>
+
+        </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
     </div>
+
     <br />
     <div class="buttons">
     <button
@@ -39,5 +68,4 @@
       Cancel
     </button>
   </div>
-  </form>
   

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/dataModels/Items';
 import { UiService } from 'src/app/services/ui.service';
+import { AddItemComponent } from '../add-item/add-item.component';
 
 @Component({
   selector: 'app-pantry',
@@ -9,7 +11,7 @@ import { UiService } from 'src/app/services/ui.service';
 })
 export class PantryComponent {
 
-  constructor(public ui: UiService) {}
+  constructor(public ui: UiService, public dialog: MatDialog) {}
 
   addQuantity(itemObject: Item) {
     itemObject.quantity = itemObject.quantity + 1
@@ -21,5 +23,13 @@ export class PantryComponent {
     itemObject.quantity = itemObject.quantity - 1
     this.ui.updateItem(itemObject)
   } else this.ui.showError(`You have no more ${itemObject.name} to remove`)
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(AddItemComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

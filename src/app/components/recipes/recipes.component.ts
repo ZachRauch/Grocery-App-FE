@@ -15,7 +15,7 @@ panelOpenState = false;
 
 openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
   this.dialog.open(NewRecipeComponent, {
-    width: '250px',
+    width: '450px',
     enterAnimationDuration,
     exitAnimationDuration,
   });

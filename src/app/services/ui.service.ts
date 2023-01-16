@@ -5,7 +5,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAccountComponent } from '../components/edit-account/edit-account.component';
-import { Pantry } from '../dataModels/Pantry';
 import { Item } from '../dataModels/Items';
 import { Recipe } from '../dataModels/Recipe';
 
@@ -33,7 +32,7 @@ export class UiService {
   public displayToolbar = false;
   public displayProfile = false;
   public displayRecipes = false;
-
+  public displayPantry = false;
 
   resetDisplays() {
     this.displayLogin = false;
@@ -41,6 +40,7 @@ export class UiService {
     this.displayToolbar = false;
     this.displayProfile = false;
     this.displayRecipes = false;
+    this.displayPantry = false;
 
   }
 
@@ -69,6 +69,12 @@ export class UiService {
   showToolbar() {
     this.resetDisplays();
     this.displayToolbar = true;
+  }
+
+  showPantry() {
+    this.resetDisplays();
+    this.displayToolbar = true;
+    this.displayPantry = true;
   }
 
   public showError(message: string): void {
@@ -268,6 +274,15 @@ updateItem(updatedItem: Item) {
       this.getItems()
   },
     error: () => this.showError("Error updating item inventory")
+  })
+}
+
+addItem(newItem: Item) {
+  this.http.post('http://localhost:8080/items', newItem)
+  .pipe(take(1))
+  .subscribe({
+    next: () => this.getItems(),
+    error: () => this.showError("Error adding item")
   })
 }
 }

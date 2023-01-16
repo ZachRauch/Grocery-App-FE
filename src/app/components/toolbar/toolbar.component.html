@@ -29,19 +29,10 @@
 <mat-drawer-container hasBackdrop="true" autosize>
   <mat-drawer #drawer mode="side">
       <mat-toolbar color="accent">
-          <span class="spacer"></span>
-          <button mat-icon-button><mat-icon>account_box</mat-icon></button>
       </mat-toolbar>
-      <!-- DEFAULT NAVIGATION -->
-      <ul>
+      <!-- NAVIGATION -->
           <button mat-button (click)="ui.getRecipes(); ui.showRecipes()"><h2>Recipes</h2></button>
-          <h2>Shop by Category</h2>
-
-      </ul>
-      <!-- SHOPKEEPER NAVIGATION HERE -->
-      <div>
-              <h2>Store Management</h2>
-
-      </div>
+          <button mat-button (click)="ui.getItems(); ui.showPantry()"><h2>Pantry</h2></button>
+          <button mat-button (click)="ui.getRecipes();"><h2>Shopping List</h2></button>
   </mat-drawer>
 </mat-drawer-container>

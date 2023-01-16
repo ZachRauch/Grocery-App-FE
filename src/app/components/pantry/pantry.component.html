@@ -1,8 +1,7 @@
 <h2>Pantry</h2>
->
-<button (click)="ui.getItems()">retrieve thine items</button>
 
-<!-- At some oipnt retrieve items in order of quantity descending -->
+
+<!-- At some point retrieve items in order of quantity descending -->
 <div *ngFor="let each of this.ui.items">
   <img src="{{ each.itemImage }}" width="100px" height="100px" />
   {{ each.name }} (x{{ each.quantity }})
@@ -19,3 +18,6 @@
 
   <hr />
 </div>
+<br>
+<button mat-raised-button color="accent" (click)="openDialog('0ms', '0ms')">Add New Item</button>
+
