@@ -1,1 +1,24 @@
-<p>shoppinglist works!</p>
+<h2>Shopping List</h2>
+
+
+<!-- At some point retrieve items in order of quantity descending -->
+<div *ngFor="let each of this.ui.shoppingListItemsSet">
+  <img src="{{ each.itemImage }}" width="100px" height="100px" />
+  {{ each.name }} 
+  <span class="spacer"></span>
+
+  <button mat-icon-button matTooltip="Update Pantry Inventory" color="warn" (click)="reduceQuantity(each)">
+    <mat-icon>remove_circle_outline</mat-icon>
+  </button>
+  
+  {{this.getCount(each.name)}}
+
+  <button mat-icon-button matTooltip="Update Pantry Inventory" (click)="addQuantity(each)">
+    <mat-icon class="green-icon">add_circle_outline</mat-icon>
+  </button>
+
+  <hr />
+</div>
+<br>
+<button mat-raised-button color="accent" (click)="openDialog('0ms', '0ms'); this.ui.getItems()">Add an Item to Your Shopping List</button>
+

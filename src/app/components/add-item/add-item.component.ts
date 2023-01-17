@@ -10,7 +10,7 @@ import { UiService } from 'src/app/services/ui.service';
 export class AddItemComponent {
   constructor(public ui:UiService) {}
 
-  public newItem: Item = new Item(-1, this.ui.currentUser.userId, '', '', 0)
+  public newItem: Item = new Item(-1, '', '')
 
   onCancel() {
     this.ui.resetDisplays()

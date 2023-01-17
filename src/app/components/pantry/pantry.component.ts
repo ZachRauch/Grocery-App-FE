@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/dataModels/Items';
 import { UiService } from 'src/app/services/ui.service';
 import { AddItemComponent } from '../add-item/add-item.component';
+import { PantryAddItemComponent } from '../pantry-add-item/pantry-add-item.component';
 
 @Component({
   selector: 'app-pantry',
@@ -13,21 +14,57 @@ export class PantryComponent {
 
   constructor(public ui: UiService, public dialog: MatDialog) {}
 
+  public uniqueValuesList: String[] = []
+
+  getCount(value: String) {
+    var count = 0;
+    this.ui.pantryValuesList.forEach((v) => ((v === value) && (count++)));
+    return count;
+}
+
+
+public valuesList: String[] = []
+
+// getItemNameList(){
+//   for (let i = 0; i < this.ui.items.length; i++) {
+//     this.valuesList.push(this.ui.items[i].name)
+//   } return this.valuesList
+// }
+
+  getQuantity(input: String) {
+    for (let i = 0; i < this.ui.items.length; i++)
+    if (!this.uniqueValuesList.includes(this.ui.items[i].name)) {
+      this.uniqueValuesList.push(this.ui.items[i].name);
+      this.valuesList.push(this.ui.items[i].name)
+    } else this.valuesList.push(this.ui.items[i].name)
+    this.getCount(input)
+  }
+
+  removeDuplicates() {
+    let itemsSet = this.ui.items.filter((value, index, self) => 
+    index === self.findIndex((t) => (
+      t.name === value.name
+    )))
+    return itemsSet
+  }
+
   addQuantity(itemObject: Item) {
-    itemObject.quantity = itemObject.quantity + 1
-    this.ui.updateItem(itemObject)
+    this.ui.pantry.items.push(itemObject)
+    // this.ui.deletePantry(this.ui.pantry)
+    // this.ui.addPantry(this.ui.pantry)
+    this.ui.updatePantry(this.ui.pantry)
   }
 
   reduceQuantity(itemObject: Item) {
-    if (itemObject.quantity >= 1) {
-    itemObject.quantity = itemObject.quantity - 1
-    this.ui.updateItem(itemObject)
-  } else this.ui.showError(`You have no more ${itemObject.name} to remove`)
+    this.ui.pantry.items.splice(this.ui.pantry.items.indexOf(itemObject), 1)
+    // this.ui.deletePantry(this.ui.pantry)
+    // this.ui.addPantry(this.ui.pantry)
+    this.ui.updatePantry(this.ui.pantry)
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(AddItemComponent, {
-      width: '250px',
+    this.dialog.open(PantryAddItemComponent, {
+      width: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
     });

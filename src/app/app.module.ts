@@ -28,6 +28,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NewRecipeComponent } from './components/new-recipe/new-recipe.component';
 import { AddItemComponent } from './components/add-item/add-item.component';
+import { PantryAddItemComponent } from './components/pantry-add-item/pantry-add-item.component';
+import { ShoppinglistAddItemComponent } from './components/shoppinglist-add-item/shoppinglist-add-item.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { AddItemComponent } from './components/add-item/add-item.component';
     ShoppinglistComponent,
     PantryComponent,
     NewRecipeComponent,
-    AddItemComponent
+    AddItemComponent,
+    PantryAddItemComponent,
+    ShoppinglistAddItemComponent
   ],
   imports: [
     BrowserModule,

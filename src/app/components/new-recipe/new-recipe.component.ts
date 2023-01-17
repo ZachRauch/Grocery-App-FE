@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/dataModels/Items';
 import { Recipe } from 'src/app/dataModels/Recipe';
 import { UiService } from 'src/app/services/ui.service';
+import { AddItemComponent } from '../add-item/add-item.component';
 
 @Component({
   selector: 'app-new-recipe',
@@ -11,10 +13,9 @@ import { UiService } from 'src/app/services/ui.service';
 export class NewRecipeComponent {
 
   panelOpenState = false;
-  public itemList: Item[] = []
   public quantity: number = 0
 
-  constructor(public ui:UiService) {}
+  constructor(public ui:UiService, public dialog: MatDialog) {}
 
   public newRecipe: Recipe = new Recipe(-1, this.ui.currentUser.userId, '', '', [])
 
@@ -28,7 +29,27 @@ export class NewRecipeComponent {
 
   }
 
-  addItemToList(item: Item, quantity: number) {
-     this.itemList.push(item)*quantity
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(AddItemComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+
+  public value: number = 0
+
+  createAndAddRecipe() {
+    console.log(this.newRecipe)
+    this.ui.addRecipe(this.newRecipe)
+  }
+
+  public itemsArray: Item[] = []
+  
+  addItemsToList(item: Item, quantity: number) {
+    for (var i=0; i < quantity; i++)
+    {this.newRecipe.items.push(item)};
+    console.log(this.newRecipe.items)
+    this.ui.showError("Item has been added to recipe")
   }
 }

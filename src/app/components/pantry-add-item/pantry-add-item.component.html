@@ -1,44 +1,43 @@
-    <mat-toolbar color="primary">New Recipe</mat-toolbar>
-  
-    <div class="form-fields">
-      <mat-form-field appearance="fill">
-        <mat-label>Recipe Name</mat-label>
-        <input matInput [(ngModel)]="newRecipe.name" name="name" />
-      </mat-form-field>
-      <br />
-      <mat-form-field appearance="fill">
-        <mat-label>Image link</mat-label>
-        <input matInput [(ngModel)]="newRecipe.recipeImage" name="recipeImage" />
-      </mat-form-field>
-      <br />
 
-      <mat-accordion>
+<form class="mat-elevation-z8">
+    <mat-toolbar color="primary">Add an Item to Your Pantry</mat-toolbar>
+
+    <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true"
                              (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Items
             </mat-panel-title>
+            <!-- add a filter -->
           </mat-expansion-panel-header>
           <div *ngFor="let each of this.ui.itemsSet">
           <img src="{{ each.itemImage }}" width="100px" height="100px" />
           {{ each.name }}
 
           <span class="spacer"></span>
-        
-          <input type="number" value="{{value}}" ng-model="value" name="value"/>
 
-          <button mat-icon-button matTooltip="Add Item to Recipe" (click)="this.addItemsToList(each, value)">
+          <button mat-icon-button matTooltip="Add Item to Pantry" (click)="addItemToPantry(each)">
             <mat-icon class="green-icon">queue</mat-icon>
           </button>
 
         </div>
-        
         </mat-expansion-panel>
       </mat-accordion>
 
+  <h2> Or Create a New Item</h2>
+    <div class="form-fields">
+      <mat-form-field appearance="fill">
+        <mat-label>Item Name</mat-label>
+        <input matInput [(ngModel)]="newItem.name" name="name" required/>
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Image link</mat-label>
+        <input matInput [(ngModel)]="newItem.itemImage" name="itemImage" />
+      </mat-form-field>
+      <br />
     </div>
-
     <br />
     <div class="buttons">
     <button
@@ -46,9 +45,9 @@
       type="submit"
       color="accent"
       style="margin-top: 10px"
-      (click)="this.createAndAddRecipe()"
+      (click)="ui.addItem(this.newItem); addItemToPantry(this.newItem)"
     >
-      Add Recipe
+      Create Item
     </button>
     <br />
     <button
@@ -61,4 +60,4 @@
       Cancel
     </button>
   </div>
-  
+  </form>

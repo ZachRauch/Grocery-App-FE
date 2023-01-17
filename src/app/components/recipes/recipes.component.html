@@ -5,12 +5,12 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
             <img src={{each.recipeImage}} width="100px" height="100px">
-            {{each.name}}
+            {{each.name}} 
             <span class="spacer"></span>
             <button mat-icon-button matTooltip="Add ingredients to shopping list"><mat-icon>add_shopping_cart</mat-icon></button>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <ul> <li *ngFor="let item of each.items">{{item.name}} (x{{item.quantity}})</li> </ul>
+      <ul> <li *ngFor="let item of each.items">{{item.name}} (xnumber)</li> </ul>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

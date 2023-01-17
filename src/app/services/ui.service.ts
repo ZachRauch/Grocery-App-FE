@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditAccountComponent } from '../components/edit-account/edit-account.component';
 import { Item } from '../dataModels/Items';
 import { Recipe } from '../dataModels/Recipe';
+import { Pantry } from '../dataModels/Pantry';
+import { ShoppingList } from '../dataModels/ShoppingList';
 
 
 @Injectable({
@@ -33,6 +35,7 @@ export class UiService {
   public displayProfile = false;
   public displayRecipes = false;
   public displayPantry = false;
+  public displayShoppingList = false;
 
   resetDisplays() {
     this.displayLogin = false;
@@ -41,7 +44,13 @@ export class UiService {
     this.displayProfile = false;
     this.displayRecipes = false;
     this.displayPantry = false;
+    this.displayShoppingList = false;
+  }
 
+  showShoppingList() {
+    this.resetDisplays();
+    this.displayToolbar = true;
+    this.displayShoppingList = true;
   }
 
   showRecipes() {
@@ -117,6 +126,7 @@ export class UiService {
       .subscribe({
         next: (user) => {
           this.successfulLogin(user);
+          this.addPantry(new Pantry(0, user.userId, []))
         },
         error: (err) => {
           if (err.status === 400) {
@@ -254,11 +264,15 @@ public items: Item[] = []
 
 getItems() {
   this.http
-  .get<Item[]>(`http://localhost:8080/items?userId=${this.currentUser.userId}`)
+  .get<Item[]>(`http://localhost:8080/items`)
   .pipe(take(1))
   .subscribe({
     next: items => {
       this.items = items
+      console.log(this.items)
+      this.removeDuplicates()
+      this.valuesList = []
+      this.getItemNameList()
     },
     error: () => {
       this.showError('Failed to get items')
@@ -266,16 +280,16 @@ getItems() {
   })
 }
 
-updateItem(updatedItem: Item) {
-  this.http.put(`http://localhost:8080/items/${updatedItem.userId}`, updatedItem)
-  .pipe(take(1))
-  .subscribe({
-    next: () => {
-      this.getItems()
-  },
-    error: () => this.showError("Error updating item inventory")
-  })
-}
+// updateItem(updatedItem: Item) {
+//   this.http.put(`http://localhost:8080/items/${updatedItem.userId}`, updatedItem)
+//   .pipe(take(1))
+//   .subscribe({
+//     next: () => {
+//       this.getItems()
+//   },
+//     error: () => this.showError("Error updating item inventory")
+//   })
+// }
 
 addItem(newItem: Item) {
   this.http.post('http://localhost:8080/items', newItem)
@@ -285,4 +299,170 @@ addItem(newItem: Item) {
     error: () => this.showError("Error adding item")
   })
 }
+
+
+public itemsSet: Item[] = []
+
+removeDuplicates() {
+  this.itemsSet = this.items.filter((value, index, self) => 
+  index === self.findIndex((t) => (
+    t.name === value.name
+  )))
+}
+
+public valuesList: String[] = []
+
+getItemNameList(){
+  for (let i = 0; i < this.items.length; i++) {
+    this.valuesList.push(this.items[i].name)
+  } return this.valuesList
+}
+
+removeItem(item: Item) {
+this.http.delete(`http://localhost:8080/items/${item.id}`)
+.pipe(take(1))
+.subscribe({
+  next: () => {
+    this.getItems()
+  },
+  error: () => {
+    this.showError('Failed to remove item')
+  }
+})
+}
+
+public pantry: Pantry = new Pantry(-1, -1, [])
+
+getPantry() {
+  this.http
+  .get<Pantry>(`http://localhost:8080/pantry?userId=${this.currentUser.userId}`)
+  .pipe(take(1))
+  .subscribe({
+    next: pantry => {
+      this.pantry = pantry
+      this.removePantryDuplicates()
+      this.getPantryItemNameList()
+    },
+    error: () => {
+      this.showError('Failed to get pantry')
+    }
+  })
+}
+
+addPantry(pantryObject: Pantry) {
+  this.http.post(`http://localhost:8080/pantry`, pantryObject)
+  .pipe(take(1))
+  .subscribe({
+    next: () => {
+      this.getPantry()
+  },
+    error: () => this.showError("Error adding pantry")
+  })
+}
+
+deletePantry(pantryObject: Pantry) {
+  this.http.delete(`http://localhost:8080/pantry/${pantryObject.id}`)
+  .pipe(take(1))
+  .subscribe({
+    next: () => {
+
+    },
+    error: () => {
+      this.showError('Failed to delete pantry')
+    }
+  })
+}
+
+updatePantry(pantryObject: Pantry) {
+  this.http.put(`http://localhost:8080/pantry?userId=${pantryObject.id}`, pantryObject)
+  .pipe(take(1))
+  .subscribe({
+    next: () => {
+      this.getPantry()
+  },
+    error: () => this.showError("Error updating pantry inventory")
+  })
+}
+
+public pantryItemsSet: Item[] = []
+
+removePantryDuplicates() {
+  this.pantryItemsSet = this.pantry.items.filter((value, index, self) => 
+  index === self.findIndex((t) => (
+    t.name === value.name
+  )))
+}
+
+public pantryValuesList: String[] = []
+
+getPantryItemNameList(){
+  this.pantryValuesList = []
+  for (let i = 0; i < this.pantry.items.length; i++) {
+    this.pantryValuesList.push(this.pantry.items[i].name)
+  } return this.pantryValuesList
+}
+
+getCount(value: String) {
+  var count = 0;
+  this.pantryValuesList.forEach((v) => (v === value && count++));
+  return count;
+}
+
+public shoppingList: ShoppingList = new ShoppingList(-1, -1, [])
+
+getShoppingList() {
+  this.http
+  .get<ShoppingList>(`http://localhost:8080/shopping-lists?userId=${this.currentUser.userId}`)
+  .pipe(take(1))
+  .subscribe({
+    next: shoppingList => {
+      this.shoppingList = shoppingList
+      this.removeshoppingListDuplicates()
+      this.getshoppingListItemNameList()
+    },
+    error: () => {
+      this.showError('Failed to get shopping list')
+    }
+  })
+}
+
+public shoppingListItemsSet: Item[] = []
+
+removeshoppingListDuplicates() {
+  this.shoppingListItemsSet = this.shoppingList.items.filter((value, index, self) => 
+  index === self.findIndex((t) => (
+    t.name === value.name
+  )))
+}
+
+public shoppingListValuesList: String[] = []
+
+getshoppingListItemNameList(){
+  for (let i = 0; i < this.shoppingList.items.length; i++) {
+    this.shoppingListValuesList.push(this.shoppingList.items[i].name)
+  } return this.shoppingListValuesList
+}
+
+updateShoppingList(shoppingListObject: ShoppingList) {
+  this.http.put(`http://localhost:8080/shopping-lists?userId=${shoppingListObject.id}`, shoppingListObject)
+  .pipe(take(1))
+  .subscribe({
+    next: () => {
+      this.getShoppingList()
+  },
+    error: () => this.showError("Error updating shopping list")
+  })
+}
+
+addShoppingList(shoppingListObject: ShoppingList) {
+  this.http.post(`http://localhost:8080/shopping-lists`, shoppingListObject)
+  .pipe(take(1))
+  .subscribe({
+    next: () => {
+      this.getShoppingList()
+  },
+    error: () => this.showError("Error adding shopping list")
+  })
+}
+
 }
