@@ -211,7 +211,7 @@ updateEditedProfile(updatedAccount: User): void {
       next: () => {
         this.updateAccount()
         this.isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"))
-            this.currentUser.next(updatedAccount)
+            this.currentUser = updatedAccount
     },
       error: () => this.showError("Error updating account")
     })

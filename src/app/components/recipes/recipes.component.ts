@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/dataModels/Items';
 import { Recipe } from 'src/app/dataModels/Recipe';
 import { UiService } from 'src/app/services/ui.service';
+import { EditRecipesComponent } from '../edit-recipes/edit-recipes.component';
 import { NewRecipeComponent } from '../new-recipe/new-recipe.component';
 
 @Component({
@@ -20,6 +21,14 @@ openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void 
     width: '450px',
     enterAnimationDuration,
     exitAnimationDuration,
+  });
+}
+
+openDialog2(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  this.dialog.open(EditRecipesComponent, {
+    width: '450px',
+    enterAnimationDuration,
+    exitAnimationDuration
   });
 }
 

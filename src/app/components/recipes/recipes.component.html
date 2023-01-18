@@ -7,6 +7,7 @@
             <img src={{each.recipeImage}} width="100px" height="100px">
             {{each.name}} 
             <span class="spacer"></span>
+            <button mat-icon-button matTooltip="Edit Recipe" (click)="this.openDialog2('0ms', '0ms')"><mat-icon>edit</mat-icon></button>
             <button mat-icon-button matTooltip="Add ingredients to shopping list" (click)="this.addIngredientsToShoppingList(each)"><mat-icon>add_shopping_cart</mat-icon></button>
         </mat-panel-title>
       </mat-expansion-panel-header>
