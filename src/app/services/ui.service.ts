@@ -127,6 +127,7 @@ export class UiService {
         next: (user) => {
           this.successfulLogin(user);
           this.addPantry(new Pantry(0, user.userId, []))
+          this.addShoppingList(new ShoppingList(0, user.userId, []))
         },
         error: (err) => {
           if (err.status === 400) {
@@ -438,6 +439,7 @@ removeshoppingListDuplicates() {
 public shoppingListValuesList: String[] = []
 
 getshoppingListItemNameList(){
+  this.shoppingListValuesList = []
   for (let i = 0; i < this.shoppingList.items.length; i++) {
     this.shoppingListValuesList.push(this.shoppingList.items[i].name)
   } return this.shoppingListValuesList
