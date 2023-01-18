@@ -45,10 +45,13 @@ export class NewRecipeComponent {
   }
 
   public itemsArray: Item[] = []
+  public number: number = 0
   
-  addItemsToList(item: Item, quantity: number) {
-    for (var i=0; i < quantity; i++)
-    {this.newRecipe.items.push(item)};
+  addItemsToList(item: Item) {
+    for (var i=0; i < this.number; i++)
+    {this.itemsArray.push(item)};
+    console.log('itemsArray: ' + this.itemsArray)
+    this.newRecipe.items = this.itemsArray
     console.log(this.newRecipe.items)
     this.ui.showError("Item has been added to recipe")
   }

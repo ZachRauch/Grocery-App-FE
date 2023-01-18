@@ -26,9 +26,9 @@
 
           <span class="spacer"></span>
         
-          <input type="number" value="{{value}}" ng-model="value" name="value"/>
+          <input type="number" value="{{value}}" [(ngModel)]="this.number" name="value"/>
 
-          <button mat-icon-button matTooltip="Add Item to Recipe" (click)="this.addItemsToList(each, value)">
+          <button mat-icon-button matTooltip="Add Item to Recipe" (click)="this.addItemsToList(each)">
             <mat-icon class="green-icon">queue</mat-icon>
           </button>
 
