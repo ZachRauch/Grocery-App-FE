@@ -60,7 +60,7 @@ addIngredientsToShoppingList(recipe: Recipe) {
   for (const each of recipe.items) {
   this.ui.shoppingList.items.push(each)}
   console.log(this.ui.shoppingList.items)
-  // this.ui.updateShoppingList(this.ui.shoppingList)
+  this.ui.updateShoppingList(this.ui.shoppingList)
   this.ui.showError("Ingredients added to shopping list")
 }
 }

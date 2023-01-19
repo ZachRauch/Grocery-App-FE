@@ -117,6 +117,10 @@ export class UiService {
     this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     this.resetDisplays();
     this.displayToolbar = true;
+    this.pantry = new Pantry(-1, this.currentUser.userId, [])
+    this.getItems();
+    this.getPantry();
+    this.getRecipes();
   }
 
   registerUser(newUser: User): void {
@@ -260,6 +264,19 @@ addRecipe(newRecipe: Recipe) {
   })
 }
 
+deleteRecipe(recipeObject: Recipe) {
+  this.http.delete(`http://localhost:8080/recipes/${recipeObject.id}`)
+.pipe(take(1))
+.subscribe({
+  next: () => {
+    this.getRecipes()
+  },
+  error: () => {
+    this.showError('Failed to remove recipe')
+  }
+})
+}
+
 
 public items: Item[] = []
 
@@ -373,6 +390,18 @@ deletePantry(pantryObject: Pantry) {
     }
   })
 }
+
+// addNewItemToPantry(newItem: Item) {
+//   this.http.post('http://localhost:8080/items', newItem)
+//   .pipe(take(1))
+//   .subscribe({
+//     next: () => {this.getItems(),
+//     // newItem doesn't have the same ID as the one that was created. 
+//     this.pantry.items.push(this.items[-1]),
+//     this.updatePantry(this.pantry)},
+//     error: () => this.showError("Error adding item")
+//   })
+// }
 
 updatePantry(pantryObject: Pantry) {
   this.http.put(`http://localhost:8080/pantry?userId=${pantryObject.id}`, pantryObject)

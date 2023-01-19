@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/dataModels/Items';
 import { Recipe } from 'src/app/dataModels/Recipe';
@@ -10,7 +10,7 @@ import { AddItemComponent } from '../add-item/add-item.component';
   templateUrl: './new-recipe.component.html',
   styleUrls: ['./new-recipe.component.css']
 })
-export class NewRecipeComponent {
+export class NewRecipeComponent implements OnInit {
 
   panelOpenState = false;
   public quantity: number = 0
@@ -23,10 +23,7 @@ export class NewRecipeComponent {
     this.ui.resetDisplays()
     this.ui.displayToolbar = true
     this.ui.displayRecipes = true
-  }
-
-  updateQuantity() {
-
+    this.dialog.closeAll()
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -38,6 +35,8 @@ export class NewRecipeComponent {
   }
 
   public value: number = 0
+  public newItem: Item = new Item(-1, '', '')
+
 
   createAndAddRecipe() {
     console.log(this.newRecipe)
@@ -54,5 +53,16 @@ export class NewRecipeComponent {
     this.newRecipe.items = this.itemsArray
     console.log(this.newRecipe.items)
     this.ui.showError("Item has been added to recipe")
+  }
+
+  public filterableItemsSet: Item[] = this.ui.itemsSet
+
+  ngOnInit(): void {
+    this.filterableItemsSet = this.ui.itemsSet
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value
+    this.filterableItemsSet = this.ui.itemsSet.filter(x => x.name.toLowerCase().includes(filterValue.toLowerCase()))
   }
 }

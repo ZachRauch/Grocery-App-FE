@@ -9,9 +9,12 @@
             <mat-panel-title>
               Items
             </mat-panel-title>
-            <!-- add a filter -->
           </mat-expansion-panel-header>
-          <div *ngFor="let each of this.ui.itemsSet">
+          <mat-form-field style="margin-top: 10px;">
+            <mat-label>Search Ingredients</mat-label>
+            <input matInput type="text" (keyup)="applyFilter($event)" placeholder="search" #search>
+        </mat-form-field>
+          <div *ngFor="let each of this.filterableItemsSet">
           <img src="{{ each.itemImage }}" width="100px" height="100px" />
           {{ each.name }}
 
@@ -25,11 +28,11 @@
         </mat-expansion-panel>
       </mat-accordion>
 
-  <h2> Or Create a New Item</h2>
+  <mat-toolbar color="primary">Or Create a New Item</mat-toolbar>
     <div class="form-fields">
       <mat-form-field appearance="fill">
         <mat-label>Item Name</mat-label>
-        <input matInput [(ngModel)]="newItem.name" name="name" required/>
+        <input matInput [(ngModel)]="newItem.name" name="name" required #name/>
       </mat-form-field>
       <br />
       <mat-form-field appearance="fill">
@@ -45,7 +48,7 @@
       type="submit"
       color="accent"
       style="margin-top: 10px"
-      (click)="ui.addItem(this.newItem); addItemToPantry(this.newItem)"
+      (click)="this.ui.addItem(this.newItem);"
     >
       Create Item
     </button>

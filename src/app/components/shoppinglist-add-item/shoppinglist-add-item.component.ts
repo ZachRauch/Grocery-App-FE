@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/dataModels/Items';
 import { UiService } from 'src/app/services/ui.service';
 
@@ -7,9 +8,9 @@ import { UiService } from 'src/app/services/ui.service';
   templateUrl: './shoppinglist-add-item.component.html',
   styleUrls: ['./shoppinglist-add-item.component.css']
 })
-export class ShoppinglistAddItemComponent {
+export class ShoppinglistAddItemComponent implements OnInit {
   
-  constructor(public ui:UiService) {}
+  constructor(public ui:UiService, public dialog: MatDialog) {}
 
   public newItem: Item = new Item(-1, '', '')
   panelOpenState = false;
@@ -18,12 +19,22 @@ export class ShoppinglistAddItemComponent {
     this.ui.resetDisplays()
     this.ui.displayToolbar = true;
     this.ui.displayShoppingList = true;
+    this.dialog.closeAll()
   }
 
   addItemToShoppingList(newItem: Item) {
     this.ui.shoppingList.items.push(newItem)
-    // this.ui.deleteShoppingList(this.ui.shoppingList)
-    // this.ui.addShoppingList(this.ui.shoppingList)
     this.ui.updateShoppingList(this.ui.shoppingList)
+  }
+
+  public filterableItemsSet: Item[] = this.ui.itemsSet
+
+  ngOnInit(): void {
+    this.filterableItemsSet = this.ui.itemsSet
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value
+    this.filterableItemsSet = this.ui.itemsSet.filter(x => x.name.includes(filterValue))
   }
 }
