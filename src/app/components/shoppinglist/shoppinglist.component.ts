@@ -21,15 +21,11 @@ export class ShoppinglistComponent {
 
 addQuantity(itemObject: Item) {
   this.ui.shoppingList.items.push(itemObject)
-  // this.ui.deleteshoppingList(this.ui.shoppingList)
-  // this.ui.addshoppingList(this.ui.shoppingList)
   this.ui.updateShoppingList(this.ui.shoppingList)
 }
 
 reduceQuantity(itemObject: Item) {
   this.ui.shoppingList.items.splice(this.ui.shoppingList.items.indexOf(itemObject), 1)
-  // this.ui.deleteshoppingList(this.ui.shoppingList)
-  // this.ui.addshoppingList(this.ui.shoppingList)
   this.ui.updateShoppingList(this.ui.shoppingList)
 }
 
@@ -39,5 +35,15 @@ openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void 
     enterAnimationDuration,
     exitAnimationDuration,
   });
+}
+
+moveToPantry(item: Item) {
+  for (var i=0; i < this.getCount(item.name); i++) {
+    this.ui.pantry.items.push(item)
+  }
+  this.ui.shoppingList.items = this.ui.shoppingList.items.filter(thing => thing.name != item.name)
+  this.ui.updateShoppingList(this.ui.shoppingList)
+  this.ui.updatePantry(this.ui.pantry)
+  this.ui.showError("Items added to pantry")
 }
 }

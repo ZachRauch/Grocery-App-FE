@@ -277,6 +277,17 @@ deleteRecipe(recipeObject: Recipe) {
 })
 }
 
+updateRecipe(recipeObject: Recipe) {
+  this.http.put(`http://localhost:8080/recipes/${recipeObject.id}`, recipeObject)
+  .pipe(take(1))
+  .subscribe({
+    next: () => {
+      this.getRecipes()
+  },
+    error: () => this.showError("Error updating recipe")
+  })
+}
+
 
 public items: Item[] = []
 

@@ -1,66 +1,86 @@
-    <mat-toolbar color="primary">New Recipe</mat-toolbar>
-  
-    <div class="form-fields">
-      <mat-form-field appearance="fill">
-        <mat-label>Recipe Name</mat-label>
-        <input matInput [(ngModel)]="newRecipe.name" name="name" />
-      </mat-form-field>
-      <br />
-      <mat-form-field appearance="fill">
-        <mat-label>Image link</mat-label>
-        <input matInput [(ngModel)]="newRecipe.recipeImage" name="recipeImage" />
-      </mat-form-field>
-      <br />
+<mat-toolbar color="primary">New Recipe</mat-toolbar>
+<div class="row">
+  <div class="form-fields; column">
+    <mat-form-field appearance="fill">
+      <mat-label>Recipe Name</mat-label>
+      <input matInput [(ngModel)]="newRecipe.name" name="name" />
+    </mat-form-field>
+    <br />
 
-      <mat-accordion>
-        <mat-expansion-panel (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Items
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-form-field style="margin-top: 10px;">
-            <mat-label>Search Ingredients</mat-label>
-            <input matInput type="text" (keyup)="applyFilter($event)" placeholder="search" #search>
+    <mat-form-field appearance="fill">
+      <mat-label>Image link</mat-label>
+      <input matInput [(ngModel)]="newRecipe.recipeImage" name="recipeImage"/>
+    </mat-form-field>
+    <br />
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Recipe Instructions</mat-label>
+      <textarea matInput [(ngModel)]="newRecipe.steps" name="steps" rows="10" ></textarea>
+    </mat-form-field>
+    <br />
+
+    <mat-accordion>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Items </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field style="margin-top: 10px">
+          <mat-label>Search Ingredients</mat-label>
+          <input
+            matInput
+            type="text"
+            (keyup)="applyFilter($event)"
+            placeholder="search"
+            #search
+          />
         </mat-form-field>
-          <div *ngFor="let each of this.filterableItemsSet">
+        <div *ngFor="let each of this.filterableItemsSet">
           <img src="{{ each.itemImage }}" width="100px" height="100px" />
           {{ each.name }}
 
           <span class="spacer"></span>
-        
-          <input type="number" value="{{value}}" [(ngModel)]="this.number" name="value"/>
 
-          <button mat-icon-button matTooltip="Add Item to Recipe" (click)="this.addItemsToList(each)">
+          <input
+            type="number"
+            value="{{ value }}"
+            [(ngModel)]="this.number"
+            name="value"
+          />
+
+          <button
+            mat-icon-button
+            matTooltip="Add Item to Recipe"
+            (click)="this.addItemsToList(each)"
+          >
             <mat-icon class="green-icon">queue</mat-icon>
           </button>
-
         </div>
-        
-        </mat-expansion-panel>
-      </mat-accordion>
-      <mat-toolbar color="primary">Or Create a New Item</mat-toolbar>
-      <div class="form-fields">
-        <mat-form-field appearance="fill">
-          <mat-label>Item Name</mat-label>
-          <input matInput [(ngModel)]="newItem.name" name="name" required #name/>
-        </mat-form-field>
-        <br />
-        <mat-form-field appearance="fill">
-          <mat-label>Image link</mat-label>
-          <input matInput [(ngModel)]="newItem.itemImage" name="itemImage" />
-        </mat-form-field>
-        <br />
-      </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-toolbar color="primary">Or Create a New Item</mat-toolbar>
+    <div class="form-fields">
+      <mat-form-field appearance="fill">
+        <mat-label>Item Name</mat-label>
+        <input matInput [(ngModel)]="newItem.name" name="name" required #name />
+      </mat-form-field>
       <br />
-      <div class="buttons">
+      <mat-form-field appearance="fill">
+        <mat-label>Image link</mat-label>
+        <input matInput [(ngModel)]="newItem.itemImage" name="itemImage" />
+      </mat-form-field>
+      <br />
+    </div>
+    <br />
+    <div class="buttons">
       <button
         mat-raised-button
         type="submit"
         color="accent"
         style="margin-top: 10px"
-        (click)="this.ui.addItem(this.newItem);"
+        (click)="this.ui.addItem(this.newItem)"
       >
         Create Item
       </button>
@@ -68,24 +88,40 @@
 
     <br />
     <div class="buttons">
-    <button
-      mat-raised-button
-      type="submit"
-      color="accent"
-      style="margin-top: 10px"
-      (click)="this.createAndAddRecipe()"
-    >
-      Add Recipe
-    </button>
-    <br />
-    <button
-      mat-raised-button
-      type="submit"
-      color="accent"
-      style="margin-top: 10px"
-      (click)="onCancel()"
-    >
-      Cancel
-    </button>
+      <button
+        mat-raised-button
+        type="submit"
+        color="accent"
+        style="margin-top: 10px"
+        (click)="this.createAndAddRecipe()"
+      >
+        Add Recipe
+      </button>
+      <br />
+      <button
+        mat-raised-button
+        type="submit"
+        color="accent"
+        style="margin-top: 10px"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+    </div>
   </div>
-  
+  <br>
+  <div class="column">
+    <img src="{{ newRecipe.recipeImage }}" width="100px" height="100px"/>
+    <h3 style="color: white;">{{ newRecipe.name }}</h3>
+    <h4 style="color: white;" *ngIf="removeRecipeListDuplicates().length > 0">Ingredients</h4>
+    <ul style="color: white;">
+      <li *ngFor="let item of removeRecipeListDuplicates()">
+        {{ item.name }} (x{{
+          getCount(item.name, getListOfIngredients(newRecipe))
+        }})
+      </li>
+    </ul>
+    <h4 style="color: white;" class="instruction" *ngIf="newRecipe.steps.length > 0">Instruction</h4>
+    <p style="color: white;">{{newRecipe.steps}}</p>
+  </div>
+</div>

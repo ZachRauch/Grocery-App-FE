@@ -17,7 +17,7 @@ export class NewRecipeComponent implements OnInit {
 
   constructor(public ui:UiService, public dialog: MatDialog) {}
 
-  public newRecipe: Recipe = new Recipe(-1, this.ui.currentUser.userId, '', '', [])
+  public newRecipe: Recipe = new Recipe(-1, this.ui.currentUser.userId, '', '', [], '')
 
   onCancel() {
     this.ui.resetDisplays()
@@ -39,7 +39,6 @@ export class NewRecipeComponent implements OnInit {
 
 
   createAndAddRecipe() {
-    console.log(this.newRecipe)
     this.ui.addRecipe(this.newRecipe)
   }
 
@@ -49,9 +48,7 @@ export class NewRecipeComponent implements OnInit {
   addItemsToList(item: Item) {
     for (var i=0; i < this.number; i++)
     {this.itemsArray.push(item)};
-    console.log('itemsArray: ' + this.itemsArray)
     this.newRecipe.items = this.itemsArray
-    console.log(this.newRecipe.items)
     this.ui.showError("Item has been added to recipe")
   }
 
@@ -65,4 +62,29 @@ export class NewRecipeComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value
     this.filterableItemsSet = this.ui.itemsSet.filter(x => x.name.toLowerCase().includes(filterValue.toLowerCase()))
   }
+
+  getListOfIngredients(recipe: Recipe) {
+    let recipeItemsList: String[] = []
+    for (let i = 0; i < recipe.items.length; i++) {
+      recipeItemsList.push(recipe.items[i].name)
+    }
+    return recipeItemsList
+  }
+
+  getCount(value: String, ingredientList: String[]) {
+    var count = 0;
+    ingredientList.forEach((v) => ((v === value) && (count++)));
+    return count;
+  }
+
+public recipeListItemsSet: Item[] = []
+
+removeRecipeListDuplicates() {
+  this.recipeListItemsSet = this.newRecipe.items.filter((value, index, self) => 
+  index === self.findIndex((t) => (
+    t.name === value.name
+  )))
+  return this.recipeListItemsSet
+}
+
 }

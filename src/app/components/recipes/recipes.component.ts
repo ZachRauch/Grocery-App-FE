@@ -6,6 +6,10 @@ import { UiService } from 'src/app/services/ui.service';
 import { EditRecipesComponent } from '../edit-recipes/edit-recipes.component';
 import { NewRecipeComponent } from '../new-recipe/new-recipe.component';
 
+export interface DialogData {
+  recipe: Recipe;
+}
+
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
@@ -18,15 +22,18 @@ panelOpenState = false;
 
 openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
   this.dialog.open(NewRecipeComponent, {
-    width: '450px',
+    width: '75%',
+    height: '90%',
     enterAnimationDuration,
     exitAnimationDuration,
   });
 }
 
-openDialog2(enterAnimationDuration: string, exitAnimationDuration: string): void {
+openDialog2(enterAnimationDuration: string, exitAnimationDuration: string, recipeObject: Recipe): void {
   this.dialog.open(EditRecipesComponent, {
-    width: '450px',
+    data: {recipe: recipeObject},
+    width: '75%',
+    height: '90%',
     enterAnimationDuration,
     exitAnimationDuration
   });
@@ -56,10 +63,8 @@ getCount(value: String, ingredientList: String[]) {
 }
 
 addIngredientsToShoppingList(recipe: Recipe) {
-  console.log(recipe.items)
   for (const each of recipe.items) {
   this.ui.shoppingList.items.push(each)}
-  console.log(this.ui.shoppingList.items)
   this.ui.updateShoppingList(this.ui.shoppingList)
   this.ui.showError("Ingredients added to shopping list")
 }
