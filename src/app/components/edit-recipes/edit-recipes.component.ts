@@ -76,7 +76,10 @@ removeRecipeListDuplicates() {
 
 updateRecipe() {
   console.log(this.updatedRecipe)
-  this.ui.updateRecipe(this.updatedRecipe)
+  // this.ui.updateRecipe(this.updatedRecipe)
+  // this.ui.deleteRecipe(this.updatedRecipe)
+  // this.ui.addRecipe(this.updatedRecipe)
+  this.ui.updateRecipe2(this.updatedRecipe)
 }
 
 addQuantity(itemObject: Item) {

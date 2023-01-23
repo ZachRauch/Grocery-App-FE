@@ -1,0 +1,16 @@
+.example-card {
+    max-width: 400px;
+    height: 35%;
+  }
+.columns {
+    column-count: 3;
+}
+
+img {
+    align-self: center;
+    height: 400px;
+    width: 300px;
+}
+mat-card-title {
+    color: white;
+}

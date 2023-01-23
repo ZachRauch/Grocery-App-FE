@@ -31,6 +31,7 @@ import { AddItemComponent } from './components/add-item/add-item.component';
 import { PantryAddItemComponent } from './components/pantry-add-item/pantry-add-item.component';
 import { ShoppinglistAddItemComponent } from './components/shoppinglist-add-item/shoppinglist-add-item.component';
 import { EditRecipesComponent } from './components/edit-recipes/edit-recipes.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { EditRecipesComponent } from './components/edit-recipes/edit-recipes.com
     AddItemComponent,
     PantryAddItemComponent,
     ShoppinglistAddItemComponent,
-    EditRecipesComponent
+    EditRecipesComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,

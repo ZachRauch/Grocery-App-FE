@@ -1,4 +1,5 @@
-<div style="margin-left: 10%; margin-right: 10%;">
+<div style="margin-left: 10%; margin-right: 10%; margin-top: 5%;">
+  <h2>Recipes</h2>
 <div *ngFor="let each of this.ui.recipes">
 <mat-accordion>
     <mat-expansion-panel (opened)="panelOpenState = true"
@@ -6,14 +7,14 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
             <img src={{each.recipeImage}} width="100px" height="100px">
-            {{each.name}} 
+            <h2 style="margin-left: 15px;">{{each.name}}</h2> 
             <span class="spacer"></span>
             <button mat-icon-button matTooltip="Edit Recipe" color="warn" (click)="this.ui.deleteRecipe(each)"><mat-icon>delete</mat-icon></button>
             <button mat-icon-button matTooltip="Edit Recipe" (click)="this.openDialog2('0ms', '0ms', each)"><mat-icon>edit</mat-icon></button>
             <button mat-icon-button matTooltip="Add ingredients to shopping list" (click)="this.addIngredientsToShoppingList(each)"><mat-icon>add_shopping_cart</mat-icon></button>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <h2>Ingredients</h2>
+      <h2 style="margin-top: 25px;">Ingredients</h2>
       <ul> <li *ngFor="let item of getUniqueItemSet(each)">{{item.name}} (x{{getCount(item.name, getListOfIngredients(each))}})</li> </ul>
       <h2>Instructions</h2>
       <p>{{each.steps}}</p>
@@ -21,5 +22,5 @@
   </mat-accordion>
 </div>
 
-<button mat-raised-button color="accent" (click)="openDialog('0ms', '0ms'); ui.getItems();">Add New Recipe</button>
+<button mat-raised-button color="accent" (click)="openDialog('0ms', '0ms'); ui.getItems();" style="margin-top: 10px;">Add New Recipe</button>
 </div>

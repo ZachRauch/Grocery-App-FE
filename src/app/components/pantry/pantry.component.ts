@@ -50,15 +50,11 @@ public valuesList: String[] = []
 
   addQuantity(itemObject: Item) {
     this.ui.pantry.items.push(itemObject)
-    // this.ui.deletePantry(this.ui.pantry)
-    // this.ui.addPantry(this.ui.pantry)
     this.ui.updatePantry(this.ui.pantry)
   }
 
   reduceQuantity(itemObject: Item) {
     this.ui.pantry.items.splice(this.ui.pantry.items.indexOf(itemObject), 1)
-    // this.ui.deletePantry(this.ui.pantry)
-    // this.ui.addPantry(this.ui.pantry)
     this.ui.updatePantry(this.ui.pantry)
   }
 

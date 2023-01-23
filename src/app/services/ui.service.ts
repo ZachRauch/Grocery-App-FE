@@ -36,6 +36,7 @@ export class UiService {
   public displayRecipes = false;
   public displayPantry = false;
   public displayShoppingList = false;
+  public displayHomePage = false;
 
   resetDisplays() {
     this.displayLogin = false;
@@ -45,6 +46,7 @@ export class UiService {
     this.displayRecipes = false;
     this.displayPantry = false;
     this.displayShoppingList = false;
+    this.displayHomePage = false;
   }
 
   showShoppingList() {
@@ -85,6 +87,11 @@ export class UiService {
     this.displayToolbar = true;
     this.displayPantry = true;
   }
+  showHomePage() {
+    this.resetDisplays();
+    this.displayHomePage = true;
+    this.displayToolbar = true;
+  }
 
   public showError(message: string): void {
     this._snackBar.open(message, undefined, { duration: 10000 });
@@ -116,7 +123,7 @@ export class UiService {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     this.resetDisplays();
-    this.displayToolbar = true;
+    this.showHomePage();
     this.pantry = new Pantry(-1, this.currentUser.userId, [])
     this.getItems();
     this.getPantry();
@@ -286,6 +293,19 @@ updateRecipe(recipeObject: Recipe) {
   },
     error: () => this.showError("Error updating recipe")
   })
+}
+
+updateRecipe2(recipeObject: Recipe) {
+  this.http.delete(`http://localhost:8080/recipes/${recipeObject.id}`)
+.pipe(take(1))
+.subscribe({
+  next: () => {
+    this.addRecipe(recipeObject)
+  },
+  error: () => {
+    this.showError('Failed to remove recipe')
+  }
+})
 }
 
 
