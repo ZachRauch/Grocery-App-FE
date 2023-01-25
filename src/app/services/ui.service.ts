@@ -126,7 +126,6 @@ export class UiService {
     this.showHomePage();
     this.pantry = new Pantry(-1, this.currentUser.userId, [])
     this.getItems();
-    this.getPantry();
     this.getRecipes();
   }
 
@@ -136,9 +135,10 @@ export class UiService {
       .pipe(take(1))
       .subscribe({
         next: (user) => {
-          this.successfulLogin(user);
           this.addPantry(new Pantry(0, user.userId, []))
           this.addShoppingList(new ShoppingList(0, user.userId, []))
+          this.successfulLogin(user);
+
         },
         error: (err) => {
           if (err.status === 400) {
@@ -185,12 +185,12 @@ export class UiService {
       })
   }
 
-  deleteProfileById(id: number, email: string, password: string): void {
+  deleteProfileById(id: number): void {
     let queryParams = new HttpParams()
     queryParams = queryParams.append("email", this.currentUser.email)
     queryParams = queryParams.append("password", this.currentUser.password)
     this.http
-      .delete(`http://localhost:8080/users/${id}`, {params: queryParams })
+      .delete(`http://localhost:8080/users`, {params: queryParams })
       .pipe(take(1))
       .subscribe({
         next: () => {
@@ -205,7 +205,7 @@ export class UiService {
   }
 
   updateEditedAccount(updatedAccount: User): void {
-    this.http.put(`http://localhost:8080/users/${updatedAccount.userId}?email=${this.currentUser.email}&password=${this.currentUser.password}`, updatedAccount)
+    this.http.put(`http://localhost:8080/users?email=${this.currentUser.email}`, updatedAccount)
       .pipe(take(1))
       .subscribe({
         next: () => {
@@ -216,13 +216,14 @@ export class UiService {
 }
 
 updateEditedProfile(updatedAccount: User): void {
-  this.http.put(`http://localhost:8080/users/${updatedAccount.userId}?email=${this.currentUser.email}&password=${this.currentUser.password}`, updatedAccount)
+  this.http.put(`http://localhost:8080/users?email=${this.currentUser.email}`, updatedAccount)
     .pipe(take(1))
     .subscribe({
       next: () => {
-        this.updateAccount()
         this.isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"))
             this.currentUser = updatedAccount
+            this.updateAccount()
+
     },
       error: () => this.showError("Error updating account")
     })
@@ -230,7 +231,7 @@ updateEditedProfile(updatedAccount: User): void {
 
 updateAccount(): void {
   this.http
-    .get<User[]>('http://localhost:8080/users')
+    .get<User[]>(`http://localhost:8080/users?email=${this.currentUser.email}&password=${this.currentUser.password}`)
     .pipe(take(1))
     .subscribe({ 
       next: account => {
@@ -318,7 +319,6 @@ getItems() {
   .subscribe({
     next: items => {
       this.items = items
-      console.log(this.items)
       this.removeDuplicates()
       this.valuesList = []
       this.getItemNameList()
@@ -326,6 +326,19 @@ getItems() {
     error: () => {
       this.showError('Failed to get items')
     }
+  })
+}
+
+AddNewItemToPantry(newItem: Item) {
+  this.http.post('http://localhost:8080/items', newItem)
+  .pipe(take(1))
+  .subscribe({
+    next: () => {
+      this.getItems()
+      this.pantry.items.push(this.items[-1])
+      this.updatePantry(this.pantry)
+    },
+    error: () => this.showError("Error adding item")
   })
 }
 

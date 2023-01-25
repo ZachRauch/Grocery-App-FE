@@ -39,6 +39,7 @@ export class PantryAddItemComponent implements OnInit{
 
   addNewItem(newItem: Item) {
     this.ui.addItem(newItem);
-    this.addItemToPantry(newItem);
+    this.ui.pantry.items.push();
+    this.ui.updatePantry(this.ui.pantry)
   }
 }

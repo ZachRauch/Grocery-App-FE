@@ -60,7 +60,9 @@ public valuesList: String[] = []
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(PantryAddItemComponent, {
-      width: '450px',
+      width: '550px',
+      minHeight: '400px',
+      maxHeight: '800PX',
       enterAnimationDuration,
       exitAnimationDuration,
     });
