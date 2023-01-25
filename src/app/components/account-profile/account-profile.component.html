@@ -14,7 +14,7 @@
       <button (click)="this.ui.getAccountByEmailandPassword(ui.currentUser.email, ui.currentUser.password)"
         mat-button>Edit</button>
       <div>
-        <button (click)="this.ui.deleteProfileById(ui.currentUser.id, ui.currentUser.email, ui.currentUser.password)"
+        <button (click)="this.ui.deleteProfileById(this.ui.currentUser.id)"
           mat-button>Delete</button>
       </div>
       <div>

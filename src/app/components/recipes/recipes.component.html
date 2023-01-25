@@ -17,7 +17,7 @@
       <h2 style="margin-top: 25px;">Ingredients</h2>
       <ul> <li *ngFor="let item of getUniqueItemSet(each)">{{item.name}} (x{{getCount(item.name, getListOfIngredients(each))}})</li> </ul>
       <h2>Instructions</h2>
-      <p>{{each.steps}}</p>
+      <pre>{{each.steps}}</pre>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

@@ -15,7 +15,7 @@
 
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Recipe Instructions</mat-label>
-      <textarea matInput [(ngModel)]="newRecipe.steps" name="steps" rows="10" ></textarea>
+      <textarea matInput [(ngModel)]="newRecipe.steps" name="steps" rows="10"></textarea>
     </mat-form-field>
     <br />
 
@@ -46,14 +46,15 @@
           <input
             type="number"
             value="{{ value }}"
-            [(ngModel)]="this.number"
             name="value"
+            id="value"
+            #value
           />
 
           <button
             mat-icon-button
             matTooltip="Add Item to Recipe"
-            (click)="this.addItemsToList(each)"
+            (click)="this.addItemsToList(each, +value.value)"
           >
             <mat-icon class="green-icon">queue</mat-icon>
           </button>
@@ -122,6 +123,6 @@
       </li>
     </ul>
     <h4 style="color: white;" class="instruction" *ngIf="newRecipe.steps.length > 0">Instruction</h4>
-    <p style="color: white;">{{newRecipe.steps}}</p>
+    <pre style="color: white;" >{{newRecipe.steps}}</pre>
   </div>
 </div>

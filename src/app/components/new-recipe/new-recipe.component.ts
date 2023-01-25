@@ -45,8 +45,8 @@ export class NewRecipeComponent implements OnInit {
   public itemsArray: Item[] = []
   public number: number = 0
   
-  addItemsToList(item: Item) {
-    for (var i=0; i < this.number; i++)
+  addItemsToList(item: Item, value: number) {
+    for (var i=0; i < value; i++)
     {this.itemsArray.push(item)};
     this.newRecipe.items = this.itemsArray
     this.ui.showError("Item has been added to recipe")
