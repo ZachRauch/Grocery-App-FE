@@ -10,4 +10,6 @@ export class AppComponent {
   title = 'zach-rauch-pantry-fe';
 
   constructor(public ui: UiService) {}
+
+  backgroundUrl="https://wallpaperaccess.com/full/3234822.jpg"
 }

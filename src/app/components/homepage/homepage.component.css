@@ -14,3 +14,6 @@ img {
 mat-card-title {
     color: white;
 }
+mat-card {
+    text-align: center;
+}
